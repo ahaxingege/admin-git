@@ -18,7 +18,6 @@
         <span>{{ item.name }}</span>
       </template>
       <template v-if="item.children">
-        {{ item.meta }}
         <el-menu-item-group v-for="pro in  item.children " :index="item.path" :key="pro">
           <el-menu-item :index="pro.path" :route="pro">
             <el-icon>

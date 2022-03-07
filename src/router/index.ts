@@ -1,17 +1,13 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 const Layout = () => import(/* webpackChunkName: "layout" */ '@/layout/index.vue')
-interface Meta {
-  hidden: boolean,
-  title: string
-}
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '',
     name: 'Layout',
     component: Layout,
     meta: {
-      hidden: true,
-      title: <string>''
+      hidden: true
     },
     redirect: '/home',
     children: [
@@ -61,7 +57,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           title: '关于1'
         },
-        component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
+        component: () => import(/* webpackChunkName: "about" */ '@/components/HelloWorld.vue')
       },
       {
         path: '/about3',
@@ -76,9 +72,6 @@ const routes: Array<RouteRecordRaw> = [
     name: 'About2',
     component: Layout,
     redirect: '/about2',
-    meta: {
-      title: <string>'关于'
-    },
     children: [
       {
         path: '/about2',
