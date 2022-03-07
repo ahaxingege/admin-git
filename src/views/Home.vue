@@ -1,18 +1,35 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <img alt="Vue logo" src="../assets/logo.png" />
   </div>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component'
-import HelloWorld from '@/components/HelloWorld.vue' // @ is an alias to /src
+<script lang="ts" >
+import { ref, reactive, defineComponent, onMounted } from 'vue';
+import { useRouter } from 'vue-router'
 
-@Options({
-  components: {
-    HelloWorld
+export default defineComponent({
+  name: 'Home',
+  setup() {
+    const a = ref(1)
+    const b = reactive({});
+    const routerArr = reactive(useRouter().getRoutes())
+    const handleOpen = (key: string, keyPath: string[]) => {
+      console.log(key, keyPath)
+    }
+    const handleClose = (key: string, keyPath: string[]) => {
+      console.log(key, keyPath)
+    }
+    onMounted(() => {
+      console.log(routerArr[0])
+    })
+    return {
+      a,
+      b,
+      routerArr,
+      handleOpen,
+      handleClose
+    }
   }
 })
-export default class Home extends Vue {}
 </script>
