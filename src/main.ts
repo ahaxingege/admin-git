@@ -3,16 +3,16 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import ElementPlus from 'element-plus'
+import * as ElIcons from '@element-plus/icons-vue'
 import '@/style/reset.css'
 import 'element-plus/dist/index.css'
-interface Example {
-  meta: {
-    title: string
-    hidden?: boolean
-  }
-  [name: string]: any
-}
+import { mockXHR } from '@/mock/index';
 
+console.log(process.env.NODE_ENV)
+if (process.env.NODE_ENV === 'development') {
+  // 判断是否为mock模式
+  mockXHR();
+}
 // const app = createApp(App)
 router.beforeEach((to, from, next) => {
   if (to.meta && to.meta.title) {
@@ -21,5 +21,8 @@ router.beforeEach((to, from, next) => {
   }
   next()
 })
-
-createApp(App).use(ElementPlus).use(store).use(router).mount('#app')
+const app = createApp(App)
+for (const name in ElIcons) {
+  app.component(name, (ElIcons as any)[name])
+}
+app.use(ElementPlus).use(store).use(router).mount('#app')

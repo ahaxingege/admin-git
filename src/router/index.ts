@@ -21,46 +21,40 @@ const routes: Array<RouteRecordRaw> = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue')
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue')
       }]
   },
   {
-    path: '/about',
-    name: 'About',
-    component: Layout,
-    redirect: '/about',
-    meta: {
-      title: <string>'关于'
-    },
-    children: [
-      {
-        path: '/about',
-        name: 'About',
-        meta: {
-          title: <string>'关于'
-        },
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-      }]
-  },
-  {
-    path: '/about1',
+    path: '/about/about1',
     name: 'About1',
     component: Layout,
-    redirect: '/about1',
-    meta: {
-      title: <string>'关于'
-    },
+    redirect: '/about/about1',
     children: [
       {
-        path: '/about1',
+        path: '/about/about1',
         name: 'About1',
         meta: {
-          title: '关于1'
+          title: <string>'关于1'
+        },
+        component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
+      }]
+  },
+  {
+    path: '/about/about2',
+    name: 'About2',
+    component: Layout,
+    redirect: '/about/about2',
+    children: [
+      {
+        path: '/about/about2',
+        name: 'About2',
+        meta: {
+          title: '关于2'
         },
         component: () => import(/* webpackChunkName: "about" */ '@/components/HelloWorld.vue')
       },
       {
-        path: '/about3',
+        path: '/about/about3',
         name: 'About3',
         meta: {
           title: <string>'关于3'
@@ -68,18 +62,39 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
       }]
   }, {
-    path: '/about2',
-    name: 'About2',
+    path: '/about/about4',
+    name: 'About4',
     component: Layout,
-    redirect: '/about2',
+    redirect: '/about/about4',
     children: [
       {
-        path: '/about2',
-        name: 'About2',
+        path: '/about/about4',
+        name: 'About4',
         meta: {
-          title: <string>'关于2'
+          title: <string>'关于4'
         },
         component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
+      }, {
+        path: '/about/about5',
+        name: 'About5',
+        meta: {
+          title: <string>'关于5'
+        },
+        component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
+      }]
+  }, {
+    path: '/about/about6',
+    name: 'About6',
+    component: Layout,
+    redirect: '/about/about6',
+    children: [
+      {
+        path: '/about/about6',
+        name: 'About6',
+        meta: {
+          title: <string>'关于6'
+        },
+        component: () => import(/* webpackChunkName: "about" */ '@/views/Home.vue')
       }]
   },
   {
@@ -89,7 +104,16 @@ const routes: Array<RouteRecordRaw> = [
       hidden: true,
       title: <string>'地址错误'
     },
-    component: () => import(/* webpackChunkName: "404" */ '../views/errorPage/404.vue')
+    component: () => import(/* webpackChunkName: "404" */ '@/views/errorPage/404.vue')
+  },
+  {
+    name: '404',
+    path: '/:catchAll(.*)',
+    meta: {
+      hidden: true,
+      title: <string>'地址错误'
+    },
+    redirect: '/404'
   }
 ]
 

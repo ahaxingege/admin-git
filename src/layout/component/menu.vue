@@ -1,70 +1,81 @@
 <template>
-  <el-menu
-    active-text-color="#ffd04b"
-    background-color="#545c64"
-    class="el-menu-vertical-demo"
-    :default-active="active"
-    text-color="#fff"
-    @open="handleOpen"
-    @close="handleClose"
-    router
-  >
-    <el-sub-menu v-for="(item) in routerArr" :index="item.path" :key="item.name">
-      <template #title>
-        <el-icon :size="20">
-          <location />
-        </el-icon>
-
-        <span>{{ item.name }}</span>
-      </template>
-      <template v-if="item.children">
-        <el-menu-item-group v-for="pro in  item.children " :index="item.path" :key="pro">
-          <el-menu-item :index="pro.path" :route="pro">
-            <el-icon>
-              <edit />
-            </el-icon>
-            {{ pro.name }}
+  <el-scrollbar wrap-class="menu-scroll">
+    <el-menu
+      active-text-color="#ffd04b"
+      background-color="#545c64"
+      class="el-menu-vertical-demo"
+      :default-active="active"
+      text-color="#fff"
+      @open="handleOpen"
+      @close="handleClose"
+      router
+    >
+      <!--  unique-opened 手风琴模式 -->
+      <template v-for="(par) in routerArr" :index="par.path" :key="par.name">
+        <template v-if="par.children && par.children.length > 1">
+          <el-sub-menu :index="par.path" :route="par" :key="par.path">
+            <template #title>
+              <el-icon>
+                <fold />
+              </el-icon>
+              <span>{{ par.name }}</span>
+            </template>
+            <el-menu-item
+              v-for="pro in  par.children "
+              :index="pro.path"
+              :route="pro"
+              :key="pro.path"
+            >{{ pro.name }}</el-menu-item>
+          </el-sub-menu>
+        </template>
+        <template v-else>
+          <el-menu-item :index="par.path" :route="par" :key="par.path">
+            <template #title>
+              <el-icon>
+                <avatar />
+              </el-icon>
+              <span>{{ par.name }}</span>
+            </template>
           </el-menu-item>
-        </el-menu-item-group>
+        </template>
       </template>
-      <template v-else>
-        <el-menu-item-group :index="item.path">
-          <el-menu-item :index="item.path">{{ item.name }}</el-menu-item>
-        </el-menu-item-group>
-      </template>
-    </el-sub-menu>
-  </el-menu>
+    </el-menu>
+  </el-scrollbar>
 </template>
 
 <script lang="ts" >
 import { ref, reactive, defineComponent, onMounted } from 'vue';
 import { useRouter } from 'vue-router'
-
-import { Location, Edit } from '@element-plus/icons-vue'
 export default defineComponent({
   name: 'App',
-  components: { Location, Edit },
   setup() {
     const a = ref(1)
     const b = reactive({});
     const active = ref(useRouter().currentRoute.value.fullPath);
-    console.log(useRouter().currentRoute.value.fullPath)
+    // console.log(useRouter().currentRoute.value.fullPath)
     let routerArr = reactive(useRouter().options.routes);
     routerArr = routerArr.filter((ele) => { return (ele.meta && !ele.meta.hidden) || !ele.meta })
-    const handleOpen = (key: string, keyPath: string[]) => {
+    const handleOpen: any = (key: string, keyPath: string[]) => {
       console.log(key, keyPath)
     }
     const handleClose = (key: string, keyPath: string[]) => {
       console.log(key, keyPath)
     }
+    const evil = (str: string) => {
+      var Fn = Function;
+      return new Fn('return ' + str)();
+    }
+    const str = '[5, [[4, 3], 2, 1]]'.replaceAll('[', '(').replaceAll(']', ']').replaceAll(',', '-').replaceAll(']', ')')
     onMounted(() => {
-      console.log(routerArr);
+      console.log(evil(str))
+      console.log(routerArr, routerArr.filter(x => { return x.children && x.children.length > 1 }));
     })
     return {
       a,
       b,
       active,
       routerArr,
+      evil,
       handleOpen,
       handleClose
     }
@@ -74,6 +85,11 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 .el-menu-vertical-demo {
-  height: 100%;
+  display: block;
+  min-height: 100vh;
+  background-color: var(--el-menu-bg-color);
+}
+::v-deep .el-scrollbar__view {
+  min-height: 100%;
 }
 </style>

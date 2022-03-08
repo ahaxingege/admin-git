@@ -1,9 +1,8 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <img v-for="i in 100" :key="i" alt="Vue logo" src="@/assets/logo.png" />
   </div>
 </template>
-
 <script lang="ts" >
 import { ref, reactive, defineComponent, onMounted } from 'vue';
 import { useRouter } from 'vue-router'
