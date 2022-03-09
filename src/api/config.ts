@@ -1,5 +1,6 @@
-import Axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
-Axios.defaults.baseURL = '/'
+import Axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
+import { ElMessage } from 'element-plus'
+Axios.defaults.baseURL = 'http://172.19.20.45:8080/'
 Axios.defaults.timeout = 2500;
 // 添加拦截器
 Axios.interceptors.request.use((config: AxiosRequestConfig) => {
@@ -15,16 +16,23 @@ const api = {
     return new Promise((resolve, reject) => {
       Axios.get(url, params).then(
         (response: AxiosResponse) => {
-          if (response.status === STATUS_OK) {
+          if (response.data.code === STATUS_OK) {
+            ElMessage({
+              message: response.data.message,
+              type: 'success'
+            })
             resolve(response.data)
           } else {
             // alert('请检测下您的网络')
+            ElMessage.error(response.data.message)
+
             reject(response.data)
           }
         },
         (error: any) => {
           // showToast('请检测下您的网络')
-          alert('请检测下您的网络')
+          // alert('请检测下您的网络')
+          ElMessage.error(error.data.message)
           reject(error)
         }
       )
@@ -36,8 +44,16 @@ const api = {
     return new Promise((resolve, reject) => {
       Axios.post(url, datas).then(
         (response: AxiosResponse) => {
-          if (response.status === STATUS_OK) {
+          if (response.data.code === STATUS_OK) {
+            ElMessage({
+              message: response.data.message,
+              type: 'success'
+            })
             resolve(response.data)
+          } else {
+            // alert('请检测下您的网络')
+            ElMessage.error(response.data.message)
+            reject(response.data)
           }
         },
         (error: any) => {

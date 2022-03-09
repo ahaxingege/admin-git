@@ -1,14 +1,13 @@
 import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import App from '@/App.vue'
+import router from '@/router'
+import store from '@/store'
 import ElementPlus from 'element-plus'
 import * as ElIcons from '@element-plus/icons-vue'
 import '@/style/reset.css'
 import 'element-plus/dist/index.css'
 import { mockXHR } from '@/mock/index';
 
-console.log(process.env.NODE_ENV)
 if (process.env.NODE_ENV === 'development') {
   // 判断是否为mock模式
   mockXHR();

@@ -2,7 +2,7 @@
   <el-container>
     <!-- <el-header>Header</el-header> -->
     <el-container>
-      <el-aside width="200px">
+      <el-aside :width="isCollapse ? '64px' : '200px'" :class="{ close: isCollapse }">
         <Menu />
       </el-aside>
       <el-container class="auto-scroll">
@@ -21,41 +21,20 @@
   </el-container>
 </template>
 <script lang="ts" >
-import { ref, reactive, defineComponent, onMounted } from 'vue';
+import { defineComponent, computed } from 'vue';
 import Menu from '@/layout/component/menu.vue';
-import * as user from '@/api/login'
+import { mapGetters, useStore } from 'vuex'
 export default defineComponent({
   name: 'App',
   components: {
     Menu
   },
   setup() {
-    user.login({}).then((result) => {
-      console.log(result)
-    })
-    const a = ref(1)
-    const b = reactive({});
-    // console.log(useRouter().currentRoute.value.fullPath)
-    const handleOpen: any = (key: string, keyPath: string[]) => {
-      console.log(key, keyPath)
-    }
-    const handleClose = (key: string, keyPath: string[]) => {
-      console.log(key, keyPath)
-    }
-    const evil = (str: string) => {
-      var Fn = Function;
-      return new Fn('return ' + str)();
-    }
-    const str = '[5, [[4, 3], 2, 1]]'.replaceAll('[', '(').replaceAll(']', ']').replaceAll(',', '-').replaceAll(']', ')')
-    onMounted(() => {
-      console.log(evil(str))
-    })
+    const store = useStore()
+    const storeState = mapGetters(['isCollapse'])
+    const isCollapse = computed(storeState.isCollapse.bind({ $store: store }))
     return {
-      a,
-      b,
-      evil,
-      handleOpen,
-      handleClose
+      isCollapse
     }
   }
 })
@@ -67,6 +46,10 @@ export default defineComponent({
 }
 ::v-deep .el-aside {
   min-height: 100%;
+  // transition: width 0.2s;
   background-color: var(--el-menu-bg-color);
+  &.close {
+    transition: width 0.3s;
+  }
 }
 </style>

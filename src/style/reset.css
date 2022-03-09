@@ -8,6 +8,10 @@
  * 2. 在iOS的切换横竖屏时，防止字体大小的调整.
  */
 
+* {
+  box-sizing: border-box;
+}
+
 html {
   line-height: 1.15;
   /* 1 */
