@@ -12,7 +12,7 @@
       router
     >
       <div class="toogle-collapse">
-        <h3 v-show="!isCollapse">不停机发布工具</h3>
+        <h3 v-show="!isCollapse" @click="toHome">不停机发布工具</h3>
         <el-button @click="toogleCollapse">
           <el-icon v-if="!isCollapse" color="#fff" size="30px">
             <fold />
@@ -66,9 +66,10 @@ export default defineComponent({
     const store = useStore()
     const storeState = mapGetters(['isCollapse'])
     const isCollapse = computed(storeState.isCollapse.bind({ $store: store }))
-    const active = ref(useRouter().currentRoute.value.fullPath);
+    const router = useRouter()
+    const active = ref<string>('');
     // console.log(useRouter().currentRoute.value.fullPath)
-    let routerArr = reactive(useRouter().options.routes);
+    let routerArr = reactive(router.options.routes);
     routerArr = routerArr.filter((ele) => { return (ele.meta && !ele.meta.hidden) || !ele.meta })
     const handleOpen: any = (key: string, keyPath: string[]) => {
       console.log(key, keyPath)
@@ -76,9 +77,12 @@ export default defineComponent({
     const handleClose = (key: string, keyPath: string[]) => {
       console.log(key, keyPath)
     }
+    const toHome = () => {
+      active.value = router.currentRoute.value.fullPath
+      router.push('/');
+    }
     const toogleCollapse = () => {
       store.dispatch('layoutSetting/toogleMenu', !isCollapse.value).then((result) => {
-        console.log(result)
         result.message && ElMessage({
           message: result.message,
           type: 'success'
@@ -87,6 +91,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
+      active.value = router.currentRoute.value.fullPath
       console.log(111)
     })
     return {
@@ -95,7 +100,8 @@ export default defineComponent({
       routerArr,
       handleOpen,
       handleClose,
-      toogleCollapse
+      toogleCollapse,
+      toHome
     }
   }
 })
@@ -116,6 +122,7 @@ export default defineComponent({
     text-align: left;
     height: 20px;
     line-height: 20px;
+    cursor: pointer;
   }
   .el-button {
     background: none;
