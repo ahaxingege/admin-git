@@ -13,10 +13,10 @@
     "axios": "^0.26.0",
     "core-js": "^3.6.5",
     "element-plus": "^2.0.5",
+    "identify": "^0.1.5",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0",
-    "vuex-module-decorators": "^2.0.0",
     "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {

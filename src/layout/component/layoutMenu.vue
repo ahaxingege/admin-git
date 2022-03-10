@@ -12,6 +12,7 @@
       router
     >
       <div class="toogle-collapse">
+        <h3 v-show="!isCollapse">不停机发布工具</h3>
         <el-button @click="toogleCollapse">
           <el-icon v-if="!isCollapse" color="#fff" size="30px">
             <fold />
@@ -57,11 +58,11 @@
 <script lang="ts" >
 import { ref, reactive, defineComponent, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { ElMessage } from 'element-plus'
 import { mapGetters, useStore } from 'vuex'
 export default defineComponent({
   name: 'App',
   setup() {
-    const a = ref(1)
     const store = useStore()
     const storeState = mapGetters(['isCollapse'])
     const isCollapse = computed(storeState.isCollapse.bind({ $store: store }))
@@ -76,25 +77,22 @@ export default defineComponent({
       console.log(key, keyPath)
     }
     const toogleCollapse = () => {
-      store.dispatch('layoutSetting/login', !isCollapse.value).then((result) => {
+      store.dispatch('layoutSetting/toogleMenu', !isCollapse.value).then((result) => {
         console.log(result)
+        result.message && ElMessage({
+          message: result.message,
+          type: 'success'
+        })
       })
     }
-    const evil = (str: string) => {
-      var Fn = Function;
-      return new Fn('return ' + str)();
-    }
-    const str = '[5, [[4, 3], 2, 1]]'.replaceAll('[', '(').replaceAll(']', ']').replaceAll(',', '-').replaceAll(']', ')')
+
     onMounted(() => {
-      console.log(evil(str))
-      console.log(routerArr, routerArr.filter(x => { return x.children && x.children.length > 1 }));
+      console.log(111)
     })
     return {
-      a,
       isCollapse,
       active,
       routerArr,
-      evil,
       handleOpen,
       handleClose,
       toogleCollapse
@@ -105,13 +103,24 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 .toogle-collapse {
-  height: 30px;
-  position: relative;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 15px 15px;
+  h3 {
+    color: #fff;
+    overflow: hidden;
+    flex: 1;
+    text-align: left;
+    height: 20px;
+    line-height: 20px;
+  }
   .el-button {
-    position: absolute;
-    width: 60px;
-    right: 0;
     background: none;
+    padding: 0;
+    align-self: center;
     border: none;
   }
 }

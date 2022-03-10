@@ -4,7 +4,7 @@ import { MockParams } from './typing';
 const mocks = [...user];
 // 设置延时时间
 Mock.setup({
-  timeout: '300-600'
+  timeout: '10-50'
 });
 
 export function mockXHR() {

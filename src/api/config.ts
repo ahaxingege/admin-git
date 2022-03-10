@@ -4,10 +4,10 @@ Axios.defaults.baseURL = 'http://172.19.20.45:8080/'
 Axios.defaults.timeout = 2500;
 // 添加拦截器
 Axios.interceptors.request.use((config: AxiosRequestConfig) => {
-  console.log(config)
+  // console.log(config)
   return config
 })
-const STATUS_OK = 200;
+const STATUS_ERROR = 0;
 
 const api = {
   // get
@@ -16,8 +16,8 @@ const api = {
     return new Promise((resolve, reject) => {
       Axios.get(url, params).then(
         (response: AxiosResponse) => {
-          if (response.data.code === STATUS_OK) {
-            ElMessage({
+          if (response.data.code !== STATUS_ERROR) {
+            response.data.message && ElMessage({
               message: response.data.message,
               type: 'success'
             })
@@ -44,8 +44,8 @@ const api = {
     return new Promise((resolve, reject) => {
       Axios.post(url, datas).then(
         (response: AxiosResponse) => {
-          if (response.data.code === STATUS_OK) {
-            ElMessage({
+          if (response.data.code !== STATUS_ERROR) {
+            response.data.message && ElMessage({
               message: response.data.message,
               type: 'success'
             })

@@ -1,11 +1,13 @@
 <template>
   <el-container>
-    <!-- <el-header>Header</el-header> -->
     <el-container>
       <el-aside :width="isCollapse ? '64px' : '200px'" :class="{ close: isCollapse }">
-        <Menu />
+        <layout-menu />
       </el-aside>
       <el-container class="auto-scroll">
+        <el-header>
+          <layout-header />
+        </el-header>
         <el-scrollbar wrap-class="menu-scroll">
           <el-main>
             <router-view v-slot="{ Component }">
@@ -21,20 +23,23 @@
   </el-container>
 </template>
 <script lang="ts" >
-import { defineComponent, computed } from 'vue';
-import Menu from '@/layout/component/menu.vue';
-import { mapGetters, useStore } from 'vuex'
+import { defineComponent } from 'vue';
+import layoutMenu from '@/layout/component/layoutMenu.vue';
+import layoutHeader from '@/layout/component/LayoutHeader.vue';
+import useGetters from '@/store/hooks/useGetters'
+
 export default defineComponent({
-  name: 'App',
+  name: 'Layout',
   components: {
-    Menu
+    layoutMenu,
+    layoutHeader
   },
   setup() {
-    const store = useStore()
-    const storeState = mapGetters(['isCollapse'])
-    const isCollapse = computed(storeState.isCollapse.bind({ $store: store }))
+    const { isCollapse } = useGetters('', ['isCollapse'])
+    const { token } = useGetters('', ['token'])
     return {
-      isCollapse
+      isCollapse,
+      token
     }
   }
 })
@@ -46,7 +51,7 @@ export default defineComponent({
 }
 ::v-deep .el-aside {
   min-height: 100%;
-  // transition: width 0.2s;
+  // transition: width 0.3s;
   background-color: var(--el-menu-bg-color);
   &.close {
     transition: width 0.3s;

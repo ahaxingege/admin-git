@@ -21,7 +21,18 @@
               </template>
             </el-input>
           </el-form-item>
-          <el-form-item label prop></el-form-item>
+          <el-form-item label="验证码" prop="code">
+            <div class="flex-box">
+              <el-input v-model="form.code" @keyup.enter="onSubmit(formRef)">
+                <template #prefix>
+                  <el-icon class="el-input__icon">
+                    <check />
+                  </el-icon>
+                </template>
+              </el-input>
+              <vue-img-verify ref="verifyRef"></vue-img-verify>
+            </div>
+          </el-form-item>
           <el-form-item>
             <el-button type="primary" :loading="isloading" @click="onSubmit(formRef)">登录</el-button>
           </el-form-item>
@@ -30,27 +41,44 @@
     </el-main>
   </el-container>
 </template>
-<script lang="ts" >
+<script lang='ts' >
 import { ref, reactive, defineComponent, onMounted } from 'vue';
-// import Menu from '@/layout/component/menu.vue';
-// import * as user from '@/api/login'
 import type { ElForm } from 'element-plus'
 import { useRouter } from 'vue-router'
 import useStore from '@/store'
+import * as user from '@/api/login'
+import useGetters from '@/store/hooks/useGetters'
+import vueImgVerify from '@/components/identy.vue';
 export default defineComponent({
   name: 'Login',
   components: {
+    vueImgVerify
   },
   setup() {
     type FormInstance = InstanceType<typeof ElForm>
+    // 表单实例
     const formRef = ref<FormInstance>();
     const isloading = ref<boolean>(false)
+    const verifyRef: any = ref(null);
     const routerInstance = useRouter()
+    const keyPath = routerInstance.currentRoute.value.query.redirect as string;
+    const params: any = routerInstance.currentRoute.value.query;
+    delete params.redirect
+    const { token } = useGetters('', ['token'])
     const form = reactive({
-      userName: '',
-      password: ''
+      userName: 'admin',
+      password: '123456',
+      code: ''
     })
-
+    const checkCode = (rule: any, value: any, callback: any) => {
+      if (!value) {
+        return callback(new Error('请输入验证码'))
+      } else if (verifyRef.value.imgCode !== value) {
+        callback(new Error('请输入正确验证码'))
+      } else {
+        callback()
+      }
+    }
     const rules = reactive({
       userName: [
         {
@@ -60,8 +88,8 @@ export default defineComponent({
         },
         {
           min: 3,
-          max: 5,
-          message: 'Length should be 3 to 5',
+          max: 10,
+          message: 'Length should be 3 to 10',
           trigger: 'blur'
         }
       ],
@@ -74,13 +102,31 @@ export default defineComponent({
         {
           min: 3,
           max: 6,
-          message: 'Length should be 3 to 5',
+          message: 'Length should be 3 to 6',
           trigger: 'blur'
+        }
+      ],
+      code: [
+        {
+          required: true,
+          message: '请输入验证码',
+          trigger: 'blur'
+        },
+        {
+          trigger: 'blur',
+          validator: checkCode
         }
       ]
     })
+    user.isLogin().then((result: any) => {
+      const { sessionId } = result.data
+      if (sessionId === token.value) {
+        routerInstance.replace({ path: keyPath || '/', query: { ...params } })
+      }
+    })
     const onSubmit = (formEl: FormInstance | undefined) => {
       isloading.value = true;
+      console.log(verifyRef.value.imgCode, form.code)
       if (!formEl) {
         isloading.value = false;
         return
@@ -88,9 +134,10 @@ export default defineComponent({
       formEl.validate((valid) => {
         if (valid) {
           console.log('submit!')
-          useStore.dispatch('user/login', form).then((result) => {
+          useStore.dispatch('user/login', form).then(() => {
             isloading.value = false;
-            routerInstance.replace('/')
+            console.log(typeof params)
+            params ? routerInstance.replace({ path: keyPath || '/', query: { ...params } }) : routerInstance.replace({ path: '/' })
           }).catch(() => {
             isloading.value = false;
           })
@@ -100,7 +147,12 @@ export default defineComponent({
         }
       })
     }
+    onMounted(() => {
+      console.log(verifyRef.value.imgCode)
+    })
     return {
+      token,
+      verifyRef,
       isloading,
       form,
       rules,
@@ -110,7 +162,7 @@ export default defineComponent({
   }
 })
 </script>
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .el-container {
   height: 100%;
   overflow: auto;
@@ -133,6 +185,15 @@ export default defineComponent({
       display: flex;
       justify-content: flex-start;
       align-items: flex-start;
+      .flex-box {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        .el-input {
+          flex: 1;
+          margin-right: 15px;
+        }
+      }
     }
   }
 }

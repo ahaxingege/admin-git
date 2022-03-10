@@ -9,7 +9,6 @@ const modules = modulesFiles.keys().reduce((modules: any, modulePath: string) =>
   modules[moduleName] = value.default
   return modules
 }, {})
-console.log(modules)
 export default createStore({
   getters,
   modules,

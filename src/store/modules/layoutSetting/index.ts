@@ -19,10 +19,10 @@ const mutations: Record<string, unknown> = {
 
 const actions = {
   // 用户登录
-  login({ commit }: any, isCollapse: boolean) {
+  toogleMenu({ commit }: any, isCollapse: boolean) {
     return new Promise((resolve: any, reject: any) => {
       commit('SET_COLLAPSE', isCollapse);
-      resolve();
+      resolve({ message: '' });
     })
   }
 }

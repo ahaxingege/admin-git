@@ -1,3 +1,5 @@
+import { guid } from '@/utils/common'
+
 interface resParams {
   body: string,
   url: string,
@@ -17,12 +19,16 @@ export default [
       console.log(res.body)
       const bodyData: bodyParams = JSON.parse(res.body)
       const { userName, password } = bodyData;
+      const sessionId = guid();
+
       if (userName === 'admin' && password === '123456') {
+        sessionStorage.setItem('sessionId', sessionId);
+
         return {
           code: 200,
           message: '登录成功',
           data: {
-            name: 'testName'
+            sessionId: sessionId
           }
         };
       } else {
@@ -34,16 +40,31 @@ export default [
       }
     }
   },
-  // getToken
   {
-    url: '/auth/oauth/token',
-    type: 'post',
+    url: '/user/logout',
+    type: 'get',
     response: () => {
+      sessionStorage.removeItem('sessionId');
       return {
         code: 200,
-        message: '成功',
+        message: '成功退出登录',
         data: {
-          name: 'testName'
+          sessionId: ''
+        }
+      };
+    }
+  },
+  // getToken
+  {
+    url: '/user/check',
+    type: 'get',
+    response: () => {
+      const sessionId = sessionStorage.getItem('sessionId');
+      return {
+        code: 200,
+        message: '',
+        data: {
+          sessionId: sessionId
         }
       };
     }

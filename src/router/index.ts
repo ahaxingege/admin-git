@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 const Layout = () => import(/* webpackChunkName: "layout" */ '@/layout/index.vue')
-
 const routes: Array<RouteRecordRaw> = [
   {
     path: '',
