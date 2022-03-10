@@ -2,7 +2,7 @@
   <div class="header-wrap">
     <el-dropdown @command="handleCommand">
       <span class="el-dropdown-link">
-        设置
+        欢迎， {{ userInfo.userName }}
         <el-icon class="el-icon--right">
           <arrow-down />
         </el-icon>
@@ -37,6 +37,8 @@ export default defineComponent({
       }]
     const store = useStore()
     const { isCollapse } = useGetters('', ['isCollapse'])
+    const { userInfo } = useGetters('', ['userInfo'])
+
     const routerInstance = useRouter()
     const handleCommand = (command: string | number | Record<string, unknown>) => {
       if (command === 'logout') {
@@ -51,6 +53,7 @@ export default defineComponent({
     }
     return {
       isCollapse,
+      userInfo,
       value,
       options,
       handleCommand

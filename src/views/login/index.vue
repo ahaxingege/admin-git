@@ -136,7 +136,6 @@ export default defineComponent({
           console.log('submit!')
           useStore.dispatch('user/login', form).then(() => {
             isloading.value = false;
-            console.log(typeof params)
             params ? routerInstance.replace({ path: keyPath || '/', query: { ...params } }) : routerInstance.replace({ path: '/' })
           }).catch(() => {
             isloading.value = false;
