@@ -11,3 +11,6 @@ export const logout = () => {
 export const isLogin = () => {
   return api.get('/user/check')
 }
+export const getRoutes = () => {
+  return api.get('/user/getroutes')
+}

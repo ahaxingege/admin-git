@@ -4,16 +4,14 @@
   </div>
 </template>
 <script lang="ts" >
-import { defineComponent, onMounted } from 'vue';
-
+import { defineComponent } from 'vue';
+import { useRouter } from 'vue-router'
 export default defineComponent({
   name: 'Home',
   setup() {
-    onMounted(() => {
-      console.log('home')
-    })
+    const router = useRouter();
     return {
-
+      ...router.options.routes
     }
   }
 })

@@ -56,21 +56,24 @@
 </template>
 
 <script lang="ts" >
-import { ref, reactive, defineComponent, onMounted, computed } from 'vue';
+import { ref, reactive, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus'
-import { mapGetters, useStore } from 'vuex'
+import { useStore } from 'vuex'
+import useGetters from '@/store/hooks/useGetters'
 export default defineComponent({
   name: 'App',
   setup() {
     const store = useStore()
-    const storeState = mapGetters(['isCollapse'])
-    const isCollapse = computed(storeState.isCollapse.bind({ $store: store }))
     const router = useRouter()
+    const { isCollapse } = useGetters('', ['isCollapse'])
     const active = ref<string>('');
-    // console.log(useRouter().currentRoute.value.fullPath)
-    let routerArr = reactive(router.options.routes);
-    routerArr = routerArr.filter((ele) => { return (ele.meta && !ele.meta.hidden) || !ele.meta })
+    let routerArr = reactive(router.getRoutes());
+
+    routerArr = routerArr.filter((ele) => {
+      return (ele.children.length !== 0 && ele.meta && !ele.meta.hidden) || !ele.meta
+    })
+
     const handleOpen: any = (key: string, keyPath: string[]) => {
       console.log(key, keyPath)
     }
@@ -82,6 +85,7 @@ export default defineComponent({
       router.push('/');
     }
     const toogleCollapse = () => {
+      console.log(isCollapse.value)
       store.dispatch('layoutSetting/toogleMenu', !isCollapse.value).then((result) => {
         result.message && ElMessage({
           message: result.message,
@@ -90,10 +94,6 @@ export default defineComponent({
       })
     }
 
-    onMounted(() => {
-      active.value = router.currentRoute.value.fullPath
-      console.log(111)
-    })
     return {
       isCollapse,
       active,
@@ -136,7 +136,7 @@ export default defineComponent({
   min-height: 100vh;
   background-color: var(--el-menu-bg-color);
 }
-::v-deep .el-scrollbar__view {
+:deep .el-scrollbar__view {
   min-height: 100%;
 }
 </style>

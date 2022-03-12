@@ -3,7 +3,7 @@ import App from '@/App.vue'
 import router from '@/router'
 import store from '@/store'
 import ElementPlus from 'element-plus'
-import { myMessage, guid } from '@/utils/common'
+import { myMessage, guid, initRouter } from '@/utils/common'
 import * as ElIcons from '@element-plus/icons-vue'
 import '@/style/reset.css'
 import 'element-plus/dist/index.css'
@@ -11,6 +11,7 @@ import { mockXHR } from '@/mock/index';
 import * as user from '@/api/login'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+// const Layout = () => import(/* webpackChunkName: "layout" */ '@/layout/index.vue')
 if (process.env.NODE_ENV === 'development') {
   // 判断是否为mock模式
   mockXHR();
@@ -23,6 +24,13 @@ NProgress.configure({
   minimum: 0.3
 })
 // const app = createApp(App)
+
+user.getRoutes().then((result: any) => {
+  const { routerarr } = result.data;
+  routerarr.forEach((element: any) => {
+    initRouter(element)
+  });
+})
 router.beforeEach((to, from, next) => {
   if (to.meta && to.meta.title) {
     document.title = (to.meta.title) as string;
@@ -31,6 +39,8 @@ router.beforeEach((to, from, next) => {
   if (to.path !== '/login') {
     user.isLogin().then((result: any) => {
       const istoken = store.getters.token
+      const routerInfo = store.getters.routerInfo
+      // console.log(routerInfo)
       const { sessionId } = result.data
       setTimeout(() => {
         sessionStorage.setItem('sessionId', guid());

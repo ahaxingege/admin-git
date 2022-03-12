@@ -24,26 +24,26 @@ import { ref, defineComponent } from 'vue';
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import useGetters from '@/store/hooks/useGetters'
+interface optionsType {
+  value: string,
+  label: string
+}
 export default defineComponent({
   name: 'App',
   components: {
   },
   setup() {
-    const value = ref<string>('');
-    const options = [
-      {
-        value: 'logout',
-        label: '退出登录'
-      }]
     const store = useStore()
-    const { isCollapse } = useGetters('', ['isCollapse'])
-    const { userInfo } = useGetters('', ['userInfo'])
-
     const routerInstance = useRouter()
+    const options: Array<optionsType> = [{
+      value: 'logout',
+      label: '退出登录'
+    }]
+    const { userInfo } = useGetters('', ['isCollapse', 'userInfo'])
     const handleCommand = (command: string | number | Record<string, unknown>) => {
       if (command === 'logout') {
         store.dispatch('user/logout').then(() => {
-          const redirect = routerInstance.currentRoute.value.path as string;
+          const redirect: string = routerInstance.currentRoute.value.path;
           const params = routerInstance.currentRoute.value.query
           routerInstance.replace({
             path: '/login', query: { redirect: redirect, ...params }
@@ -52,9 +52,7 @@ export default defineComponent({
       }
     }
     return {
-      isCollapse,
       userInfo,
-      value,
       options,
       handleCommand
     }

@@ -68,5 +68,33 @@ export default [
         }
       };
     }
+  },
+  {
+    url: '/user/getroutes',
+    type: 'get',
+    response: () => {
+      const routerarr = [{
+        path: '/about1/about12',
+        name: 'About12',
+        componenturl: 'Layout',
+        redirect: '/about1/about12',
+        chilren: [{
+          path: '/about1/about12',
+          parentName: 'About12',
+          name: 'About121',
+          componenturl: 'About',
+          meta: {
+            title: '关于12'
+          }
+        }]
+      }]
+      return {
+        code: 200,
+        message: '',
+        data: {
+          routerarr: routerarr
+        }
+      }
+    }
   }
 ];

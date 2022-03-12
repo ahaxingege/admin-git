@@ -5,19 +5,52 @@ interface Shape {
   userName: string,
   password: string
 }
+
+interface metaModel {
+  title: string | null
+}
+
+interface routeModel {
+  path: string,
+  name: string,
+  metaModel: metaModel | null,
+  componenturl: string
+  redirect: string | null,
+}
+
+export interface routes {
+  path: string,
+  name: string,
+  componenturl: string
+  redirect: string | null,
+  chilren: Array<routeModel>
+}
 export interface State {
   userInfo: Shape,
-  token: string
+  token: string,
+  routerInfo: Array<routes>
 }
-// initial state
-// shape: [{ id, quantity }]
-
 const state: State = {
   userInfo: {
     userName: '',
     password: ''
   },
-  token: ''
+  token: '',
+  routerInfo: [{
+    path: 'string',
+    name: 'string',
+    componenturl: 'string',
+    redirect: 'string',
+    chilren: [{
+      path: 'string',
+      name: 'string',
+      metaModel: {
+        title: ''
+      },
+      componenturl: 'string',
+      redirect: 'string'
+    }]
+  }]
 }
 const mutations: Record<string, unknown> = {
   SET_USERINFON: (state: any, userInfo: State) => {

@@ -36,10 +36,8 @@ export default defineComponent({
   },
   setup() {
     const { isCollapse } = useGetters('', ['isCollapse'])
-    const { token } = useGetters('', ['token'])
     return {
-      isCollapse,
-      token
+      isCollapse
     }
   }
 })
@@ -49,7 +47,7 @@ export default defineComponent({
   height: 100%;
   overflow: auto;
 }
-::v-deep .el-aside {
+:deep .el-aside {
   min-height: 100%;
   // transition: width 0.3s;
   background-color: var(--el-menu-bg-color);

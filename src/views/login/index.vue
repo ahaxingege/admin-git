@@ -49,6 +49,8 @@ import useStore from '@/store'
 import * as user from '@/api/login'
 import useGetters from '@/store/hooks/useGetters'
 import vueImgVerify from '@/components/identy.vue';
+import { initRouter } from '@/utils/common'
+
 export default defineComponent({
   name: 'Login',
   components: {
@@ -61,6 +63,7 @@ export default defineComponent({
     const isloading = ref<boolean>(false)
     const verifyRef: any = ref(null);
     const routerInstance = useRouter()
+
     const keyPath = routerInstance.currentRoute.value.query.redirect as string;
     const params: any = routerInstance.currentRoute.value.query;
     delete params.redirect
@@ -136,6 +139,12 @@ export default defineComponent({
           console.log('submit!')
           useStore.dispatch('user/login', form).then(() => {
             isloading.value = false;
+            user.getRoutes().then((result: any) => {
+              const { routerarr } = result.data;
+              routerarr.forEach((element: any) => {
+                initRouter(element)
+              });
+            })
             params ? routerInstance.replace({ path: keyPath || '/', query: { ...params } }) : routerInstance.replace({ path: '/' })
           }).catch(() => {
             isloading.value = false;
