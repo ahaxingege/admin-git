@@ -20,9 +20,10 @@
   </div>
 </template>
 <script lang="ts" >
-import { ref, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { ElMessageBox } from 'element-plus'
 import useGetters from '@/store/hooks/useGetters'
 interface optionsType {
   value: string,
@@ -42,13 +43,25 @@ export default defineComponent({
     const { userInfo } = useGetters('', ['isCollapse', 'userInfo'])
     const handleCommand = (command: string | number | Record<string, unknown>) => {
       if (command === 'logout') {
-        store.dispatch('user/logout').then(() => {
-          const redirect: string = routerInstance.currentRoute.value.path;
-          const params = routerInstance.currentRoute.value.query
-          routerInstance.replace({
-            path: '/login', query: { redirect: redirect, ...params }
+        ElMessageBox.confirm(
+          '是否确认退出登录?',
+          '提示',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+            center: true
+          }
+        )
+          .then(() => {
+            store.dispatch('user/logout').then(() => {
+              const redirect: string = routerInstance.currentRoute.value.path;
+              const params = routerInstance.currentRoute.value.query
+              routerInstance.replace({
+                path: '/login', query: { redirect: redirect, ...params }
+              })
+            })
           })
-        })
       }
     }
     return {

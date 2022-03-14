@@ -1,15 +1,15 @@
 import * as user from '@/api/login'
+import { initRouter } from '@/utils/common'
+
 // import { Module, VuexModule, Mutation, Action, getModule } from 'vuex-module-decorators'
 // import store from '@/store'
 interface Shape {
   userName: string,
   password: string
 }
-
 interface metaModel {
   title: string | null
 }
-
 interface routeModel {
   path: string,
   name: string,
@@ -23,7 +23,7 @@ export interface routes {
   name: string,
   componenturl: string
   redirect: string | null,
-  chilren: Array<routeModel>
+  children: Array<routeModel>
 }
 export interface State {
   userInfo: Shape,
@@ -36,21 +36,8 @@ const state: State = {
     password: ''
   },
   token: '',
-  routerInfo: [{
-    path: 'string',
-    name: 'string',
-    componenturl: 'string',
-    redirect: 'string',
-    chilren: [{
-      path: 'string',
-      name: 'string',
-      metaModel: {
-        title: ''
-      },
-      componenturl: 'string',
-      redirect: 'string'
-    }]
-  }]
+  routerInfo: []
+
 }
 const mutations: Record<string, unknown> = {
   SET_USERINFON: (state: any, userInfo: State) => {
@@ -58,10 +45,28 @@ const mutations: Record<string, unknown> = {
   },
   SET_TOKEN: (state: State, token: string) => {
     state.token = token
+  },
+  SET_ROUTES: (state: State, routerInfo: Array<routes>) => {
+    state.routerInfo = routerInfo
   }
 }
 
 const actions = {
+  setRoutes({ commit }: any, routerInfo: Array<routes>) {
+    return new Promise((resolve: any, reject: any) => {
+      commit('SET_ROUTES', routerInfo)
+      resolve(routerInfo)
+    })
+  },
+  addRoutes({ commit, state }: any, routerInfo: Array<routes>) {
+    return new Promise((resolve: any, reject: any) => {
+      routerInfo.forEach((ele: any) => {
+        initRouter(ele)
+      });
+      // commit('SET_ROUTES', [...state.routerInfo, ...routerInfo])
+      resolve(routerInfo)
+    })
+  },
   // 用户登录
   login({ commit }: any, userInfo: Record<string, unknown>) {
     return new Promise((resolve: any, reject: any) => {
@@ -89,6 +94,7 @@ const actions = {
             password: ''
           })
           commit('SET_TOKEN', '')
+          commit('SET_ROUTES', [])
           resolve()
         })
         .catch(error => {
@@ -98,7 +104,6 @@ const actions = {
     })
   }
 }
-
 export default {
   namespaced: true,
   state,

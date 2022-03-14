@@ -2,7 +2,25 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 const Layout = () => import(/* webpackChunkName: "layout" */ '@/layout/index.vue')
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '',
+    path: '/login',
+    name: 'Login',
+    meta: {
+      hidden: true,
+      title: <string>'登录'
+    },
+    component: () => import(/* webpackChunkName: "login" */ '@/views/login/index.vue')
+  },
+  {
+    path: '/404',
+    name: '404Page',
+    meta: {
+      hidden: true,
+      title: <string>'地址错误'
+    },
+    component: () => import(/* webpackChunkName: "404" */ '@/views/errorPage/404.vue')
+  },
+  {
+    path: '/',
     name: 'Layout',
     component: Layout,
     meta: {
@@ -95,33 +113,6 @@ const routes: Array<RouteRecordRaw> = [
         },
         component: () => import(/* webpackChunkName: "about" */ '@/views/Home.vue')
       }]
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    meta: {
-      hidden: true,
-      title: <string>'登录'
-    },
-    component: () => import(/* webpackChunkName: "login" */ '@/views/login/index.vue')
-  },
-  {
-    path: '/404',
-    name: '404Page',
-    meta: {
-      hidden: true,
-      title: <string>'地址错误'
-    },
-    component: () => import(/* webpackChunkName: "404" */ '@/views/errorPage/404.vue')
-  },
-  {
-    name: '404',
-    path: '/:catchAll(.*)',
-    meta: {
-      hidden: true,
-      title: <string>'地址错误'
-    },
-    redirect: '/404'
   }
 ]
 

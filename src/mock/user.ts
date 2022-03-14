@@ -74,20 +74,40 @@ export default [
     type: 'get',
     response: () => {
       const routerarr = [{
-        path: '/about1/about12',
+        path: '/about11/about123',
         name: 'About12',
         componenturl: 'Layout',
-        redirect: '/about1/about12',
-        chilren: [{
-          path: '/about1/about12',
+        redirect: '/about11/about123',
+        children: [{
+          path: '/about11/about123',
+          parentName: 'About12',
+          name: 'About121111',
+          componenturl: 'About',
+          meta: {
+            title: '关于12113',
+            hidden: false
+          }
+        },
+        {
+          path: '/about11/about12',
           parentName: 'About12',
           name: 'About121',
           componenturl: 'About',
           meta: {
-            title: '关于12'
+            title: '关于1211',
+            hidden: false
+          }
+        }, {
+          path: '/about11/about121',
+          parentName: 'About12',
+          name: 'About1212',
+          componenturl: 'About',
+          meta: {
+            title: '关于12112',
+            hidden: false
           }
         }]
-      }]
+      }];
       return {
         code: 200,
         message: '',

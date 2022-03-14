@@ -11,8 +11,9 @@
       :collapse="isCollapse"
       router
     >
+      <!-- {{ routerInfo }} -->
       <div class="toogle-collapse">
-        <h3 v-show="!isCollapse" @click="toHome">不停机发布工具</h3>
+        <h3 v-if="!isCollapse" @click="toHome">不停机发布工具</h3>
         <el-button @click="toogleCollapse">
           <el-icon v-if="!isCollapse" color="#fff" size="30px">
             <fold />
@@ -56,7 +57,7 @@
 </template>
 
 <script lang="ts" >
-import { ref, reactive, defineComponent } from 'vue';
+import { ref, reactive, defineComponent, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus'
 import { useStore } from 'vuex'
@@ -67,13 +68,12 @@ export default defineComponent({
     const store = useStore()
     const router = useRouter()
     const { isCollapse } = useGetters('', ['isCollapse'])
+    const { routerInfo } = useGetters('', ['routerInfo'])
     const active = ref<string>('');
-    let routerArr = reactive(router.getRoutes());
-
-    routerArr = routerArr.filter((ele) => {
-      return (ele.children.length !== 0 && ele.meta && !ele.meta.hidden) || !ele.meta
+    const routerArr = routerInfo.value.filter((ele: any) => {
+      return (ele.children && ele.children.length !== 0 && ele.meta && !ele.meta.hidden) || !ele.meta
     })
-
+    console.log(routerArr)
     const handleOpen: any = (key: string, keyPath: string[]) => {
       console.log(key, keyPath)
     }
@@ -81,7 +81,6 @@ export default defineComponent({
       console.log(key, keyPath)
     }
     const toHome = () => {
-      active.value = router.currentRoute.value.fullPath
       router.push('/');
     }
     const toogleCollapse = () => {
@@ -93,9 +92,13 @@ export default defineComponent({
         })
       })
     }
-
+    onMounted(() => {
+      console.log(router.currentRoute.value.fullPath)
+      active.value = router.currentRoute.value.fullPath
+    })
     return {
       isCollapse,
+      routerInfo,
       active,
       routerArr,
       handleOpen,

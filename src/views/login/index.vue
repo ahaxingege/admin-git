@@ -121,12 +121,6 @@ export default defineComponent({
         }
       ]
     })
-    user.isLogin().then((result: any) => {
-      const { sessionId } = result.data
-      if (sessionId === token.value) {
-        routerInstance.replace({ path: keyPath || '/', query: { ...params } })
-      }
-    })
     const onSubmit = (formEl: FormInstance | undefined) => {
       isloading.value = true;
       console.log(verifyRef.value.imgCode, form.code)
@@ -139,12 +133,6 @@ export default defineComponent({
           console.log('submit!')
           useStore.dispatch('user/login', form).then(() => {
             isloading.value = false;
-            user.getRoutes().then((result: any) => {
-              const { routerarr } = result.data;
-              routerarr.forEach((element: any) => {
-                initRouter(element)
-              });
-            })
             params ? routerInstance.replace({ path: keyPath || '/', query: { ...params } }) : routerInstance.replace({ path: '/' })
           }).catch(() => {
             isloading.value = false;
