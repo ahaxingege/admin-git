@@ -23,7 +23,6 @@ NProgress.configure({
   trickleSpeed: 200,
   minimum: 0.3
 })
-
 // const app = createApp(App)
 let registerRouteFresh = true;
 router.beforeEach(async (to, from, next) => {
