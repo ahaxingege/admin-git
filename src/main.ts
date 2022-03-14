@@ -23,7 +23,6 @@ NProgress.configure({
   trickleSpeed: 200,
   minimum: 0.3
 })
-
 // const app = createApp(App)
 let registerRouteFresh = true;
 router.beforeEach(async (to, from, next) => {
@@ -73,6 +72,7 @@ router.beforeEach(async (to, from, next) => {
     next()
   }
 })
+
 router.afterEach(() => {
   // 在即将进入新的页面组件前，关闭掉进度条
   NProgress.done()
