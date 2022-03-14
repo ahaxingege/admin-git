@@ -41,7 +41,7 @@ router.beforeEach(async (to, from, next) => {
   } else {
     if (to.path !== '/login') {
       myMessage.error('登陆超时，请重新登录！！')
-      next({ path: '/login' })
+      next({ path: '/login', query: to.query })
     } else {
       next()
     }
@@ -61,7 +61,7 @@ router.beforeEach(async (to, from, next) => {
         name: '404',
         meta: {
           hidden: true,
-          title: <string>'地址错误'
+          title: '地址错误'
         },
         redirect: '/404'
       }
@@ -72,7 +72,6 @@ router.beforeEach(async (to, from, next) => {
     next()
   }
 })
-
 router.afterEach(() => {
   // 在即将进入新的页面组件前，关闭掉进度条
   NProgress.done()
