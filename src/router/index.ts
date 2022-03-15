@@ -46,6 +46,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'About1',
     component: Layout,
     redirect: '/about/about1',
+    meta: {
+      title: <string>'关于1'
+    },
     children: [
       {
         path: '/about/about1',
@@ -61,6 +64,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'About2',
     component: Layout,
     redirect: '/about/about2',
+    meta: {
+      title: <string>'关于2'
+    },
     children: [
       {
         path: '/about/about2',
@@ -83,6 +89,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'About4',
     component: Layout,
     redirect: '/about/about4',
+    meta: {
+      title: <string>'关于4'
+    },
     children: [
       {
         path: '/about/about4',
@@ -104,6 +113,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'About6',
     component: Layout,
     redirect: '/about/about6',
+    meta: {
+      title: <string>'关于6'
+    },
     children: [
       {
         path: '/about/about6',

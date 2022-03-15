@@ -78,6 +78,10 @@ export default [
         name: 'About12',
         componenturl: 'Layout',
         redirect: '/about11/about123',
+        meta: {
+          title: '关于12113',
+          hidden: false
+        },
         children: [{
           path: '/about11/about123',
           parentName: 'About12',
@@ -104,6 +108,25 @@ export default [
           componenturl: 'About',
           meta: {
             title: '关于12112',
+            hidden: false
+          }
+        }]
+      }, {
+        path: '/abo111/about123',
+        name: 'About1112',
+        componenturl: 'Layout',
+        redirect: '/abo111/about123',
+        meta: {
+          title: '关于12113',
+          hidden: false
+        },
+        children: [{
+          path: '/abo111/about123',
+          parentName: 'About1112',
+          name: 'About1211',
+          componenturl: 'Home',
+          meta: {
+            title: '关于12113',
             hidden: false
           }
         }]

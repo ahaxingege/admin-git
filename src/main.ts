@@ -59,7 +59,7 @@ router.beforeEach(async (to, from, next) => {
         name: '404',
         meta: {
           hidden: true,
-          title: <string>'地址错误'
+          title: '地址错误'
         },
         redirect: '/404'
       }
@@ -70,7 +70,6 @@ router.beforeEach(async (to, from, next) => {
     next()
   }
 })
-
 router.afterEach(() => {
   NProgress.done()
   setTimeout(() => {

@@ -31,14 +31,14 @@
               <el-icon>
                 <fold />
               </el-icon>
-              <span>{{ par.name }}</span>
+              <span>{{ par.meta.title }}</span>
             </template>
             <el-menu-item
               v-for="pro in  par.children "
               :index="pro.path"
               :route="pro"
               :key="pro.path"
-            >{{ pro.name }}</el-menu-item>
+            >{{ pro.meta.title }}</el-menu-item>
           </el-sub-menu>
         </template>
         <template v-else>
@@ -47,7 +47,7 @@
               <avatar />
             </el-icon>
             <template #title>
-              <span>{{ par.name }}</span>
+              <span>{{ par.meta.title }}</span>
             </template>
           </el-menu-item>
         </template>
