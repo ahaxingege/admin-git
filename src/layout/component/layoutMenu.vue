@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts" >
-import { ref, reactive, defineComponent, computed, onMounted } from 'vue';
+import { ref, defineComponent, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus'
 import { useStore } from 'vuex'
@@ -73,7 +73,6 @@ export default defineComponent({
     const routerArr = routerInfo.value.filter((ele: any) => {
       return (ele.children && ele.children.length !== 0 && ele.meta && !ele.meta.hidden) || !ele.meta
     })
-    console.log(routerArr)
     const handleOpen: any = (key: string, keyPath: string[]) => {
       console.log(key, keyPath)
     }
@@ -84,7 +83,6 @@ export default defineComponent({
       router.push('/');
     }
     const toogleCollapse = () => {
-      console.log(isCollapse.value)
       store.dispatch('layoutSetting/toogleMenu', !isCollapse.value).then((result) => {
         result.message && ElMessage({
           message: result.message,
@@ -93,7 +91,6 @@ export default defineComponent({
       })
     }
     onMounted(() => {
-      console.log(router.currentRoute.value.fullPath)
       active.value = router.currentRoute.value.fullPath
     })
     return {

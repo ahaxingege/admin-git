@@ -49,7 +49,7 @@ export default defineComponent({
 }
 :deep .el-aside {
   min-height: 100%;
-  // transition: width 0.3s;
+  // transition: width 1.5s;
   background-color: var(--el-menu-bg-color);
   &.close {
     transition: width 0.3s;

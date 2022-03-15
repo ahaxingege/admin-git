@@ -42,8 +42,6 @@ router.beforeEach(async (to, from, next) => {
     if (to.path !== '/login') {
       myMessage.error('登陆超时，请重新登录！！')
       next({ path: '/login' })
-    } else {
-      next()
     }
     NProgress.done()
   }
@@ -74,7 +72,6 @@ router.beforeEach(async (to, from, next) => {
 })
 
 router.afterEach(() => {
-  // 在即将进入新的页面组件前，关闭掉进度条
   NProgress.done()
   setTimeout(() => {
     sessionStorage.setItem('sessionId', guid());
