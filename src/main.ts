@@ -11,11 +11,11 @@ import { mockXHR } from '@/mock/index';
 import * as user from '@/api/login'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-// const Layout = () => import(/* webpackChunkName: "layout" */ '@/layout/index.vue')
-if (process.env.NODE_ENV === 'development') {
-  // 判断是否为mock模式
-  mockXHR();
-}
+// const Layout = () => import(/* webpackChunkName: 'layout' */ '@/layout/index.vue')
+// if (process.env.NODE_ENV === 'development') {
+// 判断是否为mock模式
+mockXHR();
+// }
 NProgress.configure({
   easing: 'ease',
   speed: 500,
@@ -25,7 +25,7 @@ NProgress.configure({
 })
 // const app = createApp(App)
 let registerRouteFresh = true;
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _from, next) => {
   NProgress.start();
   if (to.meta && to.meta.title) {
     document.title = (to.meta.title) as string;
@@ -49,7 +49,7 @@ router.beforeEach(async (to, from, next) => {
   const { routerarr } = result.data;
   const menueRouters = JSON.parse(JSON.stringify(routerarr))
   const menus = [...router.options.routes, ...menueRouters]
-  store.dispatch('user/setRoutes', menus)
+  await store.dispatch('user/setRoutes', menus)
   if (registerRouteFresh) {
     const accessRoutes = await store.dispatch('user/addRoutes', routerarr)
     mapFun(accessRoutes)
@@ -74,7 +74,7 @@ router.afterEach(() => {
   NProgress.done()
   setTimeout(() => {
     sessionStorage.setItem('sessionId', guid());
-  }, 36000000)
+  }, 300000)
 })
 const app = createApp(App)
 for (const name in ElIcons) {

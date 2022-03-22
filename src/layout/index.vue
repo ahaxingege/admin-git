@@ -23,11 +23,10 @@
   </el-container>
 </template>
 <script lang="ts" >
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
 import layoutMenu from '@/layout/component/layoutMenu.vue';
 import layoutHeader from '@/layout/component/LayoutHeader.vue';
 import useGetters from '@/store/hooks/useGetters'
-
 export default defineComponent({
   name: 'Layout',
   components: {
@@ -35,7 +34,9 @@ export default defineComponent({
     layoutHeader
   },
   setup() {
+    // const store = useStore();
     const { isCollapse } = useGetters('', ['isCollapse'])
+    // const isCollapse = computed(() => store.getters.isCollapse);
     return {
       isCollapse
     }

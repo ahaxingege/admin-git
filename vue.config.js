@@ -2,7 +2,7 @@
 const path = require('path')
 const resolve = (dir) => path.join(__dirname, dir)
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'development' ? '/' : './', //基本路径
+  publicPath: process.env.NODE_ENV === 'development' ? '/' : '/', //基本路径
   assetsDir: 'static', //放置生成的静态资源 (js、css、img、fonts) 的目录
   productionSourceMap: false, //生产环境是否生成 sourceMap 文件
   devServer: {

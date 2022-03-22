@@ -85,8 +85,8 @@ export default [
         children: [{
           path: '/about11/about123',
           parentName: 'About12',
-          name: 'About121111',
-          componenturl: 'About',
+          name: 'BaseTable',
+          componenturl: 'baseTable/index',
           meta: {
             title: '关于12113',
             hidden: false

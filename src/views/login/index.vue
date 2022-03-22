@@ -77,6 +77,7 @@ export default defineComponent({
       if (!value) {
         return callback(new Error('请输入验证码'))
       } else if (verifyRef.value.imgCode !== value) {
+        console.log(verifyRef.value.imgCode, value)
         callback(new Error('请输入正确验证码'))
       } else {
         callback()

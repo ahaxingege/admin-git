@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 const Layout = () => import(/* webpackChunkName: "layout" */ '@/layout/index.vue')
 const routes: Array<RouteRecordRaw> = [
   {
@@ -74,7 +74,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           title: '关于2'
         },
-        component: () => import(/* webpackChunkName: "about" */ '@/components/HelloWorld.vue')
+        component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
       },
       {
         path: '/about/about3',
@@ -129,7 +129,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(process.env.BASE_URL),
   routes
 })
 
