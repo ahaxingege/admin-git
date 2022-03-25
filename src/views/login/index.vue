@@ -76,7 +76,7 @@ export default defineComponent({
     const checkCode = (rule: any, value: any, callback: any) => {
       if (!value) {
         return callback(new Error('请输入验证码'))
-      } else if (verifyRef.value.imgCode !== value) {
+      } else if (verifyRef.value.imgCode.toLowerCase() !== value.toLowerCase()) {
         console.log(verifyRef.value.imgCode, value)
         callback(new Error('请输入正确验证码'))
       } else {

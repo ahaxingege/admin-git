@@ -2,7 +2,7 @@
   <el-container>
     <el-container>
       <el-aside :width="isCollapse ? '64px' : '200px'" :class="{ close: isCollapse }">
-        <layout-menu />
+        <layout-menu @handle="changeValue" />
       </el-aside>
       <el-container class="auto-scroll">
         <el-header>
@@ -23,7 +23,7 @@
   </el-container>
 </template>
 <script lang="ts" >
-import { defineComponent, computed } from 'vue';
+import { defineComponent, toRefs, reactive } from 'vue';
 import layoutMenu from '@/layout/component/layoutMenu.vue';
 import layoutHeader from '@/layout/component/LayoutHeader.vue';
 import useGetters from '@/store/hooks/useGetters'
@@ -34,11 +34,27 @@ export default defineComponent({
     layoutHeader
   },
   setup() {
+    const state = reactive({
+      count: 1
+    })
+
+    const add = (): void => {
+      state.count += 1
+    }
+
+    const changeValue = (num: number) => {
+      state.count += num
+      console.log(state)
+    }
+
     // const store = useStore();
     const { isCollapse } = useGetters('', ['isCollapse'])
     // const isCollapse = computed(() => store.getters.isCollapse);
     return {
-      isCollapse
+      isCollapse,
+      ...toRefs(state),
+      add,
+      changeValue
     }
   }
 })

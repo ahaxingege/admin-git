@@ -15,7 +15,7 @@ export default defineComponent({
       imgCode: string
     }
     const state: stateType = reactive({
-      pool: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890', // 字符串ABCDEFGHIJKLMNOPQRSTUVWXYZ
+      pool: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890', // 字符串ABCDEFGHIJKLMNOPQRSTUVWXYZ
       width: 300,
       height: 150,
       imgCode: ''

@@ -5,7 +5,7 @@ import { MockParams } from './typing';
 const mocks = [...user, ...tableData];
 // 设置延时时间
 Mock.setup({
-  timeout: '10-50'
+  timeout: '100-500'
 });
 
 export function mockXHR() {
