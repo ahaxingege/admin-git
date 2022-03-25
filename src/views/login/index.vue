@@ -46,11 +46,8 @@ import { ref, reactive, defineComponent, onMounted } from 'vue';
 import type { ElForm } from 'element-plus'
 import { useRouter } from 'vue-router'
 import useStore from '@/store'
-import * as user from '@/api/login'
 import useGetters from '@/store/hooks/useGetters'
 import vueImgVerify from '@/components/identy.vue';
-import { initRouter } from '@/utils/common'
-
 export default defineComponent({
   name: 'Login',
   components: {
@@ -76,8 +73,7 @@ export default defineComponent({
     const checkCode = (rule: any, value: any, callback: any) => {
       if (!value) {
         return callback(new Error('请输入验证码'))
-      } else if (verifyRef.value.imgCode.toLowerCase() !== value.toLowerCase()) {
-        console.log(verifyRef.value.imgCode, value)
+      } else if (verifyRef.value && (verifyRef.value.imgCode.toLowerCase() !== value.toLowerCase())) {
         callback(new Error('请输入正确验证码'))
       } else {
         callback()
@@ -124,7 +120,7 @@ export default defineComponent({
     })
     const onSubmit = (formEl: FormInstance | undefined) => {
       isloading.value = true;
-      console.log(verifyRef.value.imgCode, form.code)
+      console.log(verifyRef.value.imgCode.toLowerCase(), form.code.toLowerCase())
       if (!formEl) {
         isloading.value = false;
         return

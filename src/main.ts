@@ -12,20 +12,21 @@ import * as user from '@/api/login'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 // const Layout = () => import(/* webpackChunkName: 'layout' */ '@/layout/index.vue')
-// if (process.env.NODE_ENV === 'development') {
-// 判断是否为mock模式
-mockXHR();
-// }
+if (process.env.NODE_ENV === 'development') {
+  // 判断是否为mock模式
+  mockXHR();
+}
 NProgress.configure({
   easing: 'ease',
   speed: 500,
   showSpinner: false,
-  trickleSpeed: 200,
+  trickleSpeed: 100,
   minimum: 0.3
 })
 // const app = createApp(App)
 let registerRouteFresh = true;
 router.beforeEach(async (to, _from, next) => {
+  console.log('enter')
   NProgress.start();
   if (to.meta && to.meta.title) {
     document.title = (to.meta.title) as string;
@@ -37,13 +38,13 @@ router.beforeEach(async (to, _from, next) => {
     if (to.path === '/login') {
       next({ path: '/' })
     }
-    NProgress.done()
   } else {
     if (to.path !== '/login') {
       myMessage.error('登陆超时，请重新登录！！')
       next({ path: '/login' })
+    } else {
+      next()
     }
-    NProgress.done()
   }
   const result: any = await user.getRoutes()
   const { routerarr } = result.data;
