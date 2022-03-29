@@ -2,7 +2,7 @@ export default [
   {
     url: '/data/basetabel',
     type: 'post',
-    response: (res: any) => {
+    response: (_res: any) => {
       const clumn = {
         date: '2016-05-03',
         name: 'Tom',

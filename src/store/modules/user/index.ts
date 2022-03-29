@@ -1,8 +1,5 @@
 import * as user from '@/api/login'
 import { initRouter } from '@/utils/common'
-
-// import { Module, VuexModule, Mutation, Action, getModule } from 'vuex-module-decorators'
-// import store from '@/store'
 interface Shape {
   userName: string,
   password: string
@@ -53,17 +50,16 @@ const mutations: Record<string, unknown> = {
 
 const actions = {
   setRoutes({ commit }: any, routerInfo: Array<routes>) {
-    return new Promise((resolve: any, reject: any) => {
+    return new Promise((resolve: any) => {
       commit('SET_ROUTES', routerInfo)
       resolve(routerInfo)
     })
   },
   addRoutes({ commit, state }: any, routerInfo: Array<routes>) {
-    return new Promise((resolve: any, reject: any) => {
+    return new Promise((resolve: any) => {
       routerInfo.forEach((ele: any) => {
         initRouter(ele)
       });
-      // commit('SET_ROUTES', [...state.routerInfo, ...routerInfo])
       resolve(routerInfo)
     })
   },
@@ -79,12 +75,11 @@ const actions = {
           resolve()
         })
         .catch(error => {
-          console.log(error)
           reject(error)
         })
     })
   },
-  logout({ commit }: any, userInfo: Record<string, unknown>) {
+  logout({ commit }: any, _userInfo: Record<string, unknown>) {
     return new Promise((resolve: any, reject: any) => {
       user.logout()
         .then((response: any) => {

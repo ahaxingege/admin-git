@@ -11,7 +11,6 @@ interface bodyParams {
 }
 
 export default [
-  // GetUserInfo
   {
     url: '/user/login',
     type: 'post',

@@ -46,13 +46,13 @@ export default defineComponent({
       state.count += num
       console.log(state)
     }
+    const { isCollapse } = useGetters('', ['isCollapse'])
 
     // const store = useStore();
-    const { isCollapse } = useGetters('', ['isCollapse'])
     // const isCollapse = computed(() => store.getters.isCollapse);
     return {
-      isCollapse,
       ...toRefs(state),
+      isCollapse,
       add,
       changeValue
     }

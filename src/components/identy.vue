@@ -41,7 +41,6 @@ export default defineComponent({
       const b = randomNum(min, max)
       return `rgb(${r},${g},${b})`
     }
-
     // 绘制图片
     const draw = () => {
       // 3.填充背景颜色，背景颜色要浅一点
@@ -112,7 +111,6 @@ export default defineComponent({
       }
       return imgCode
     }
-
     return {
       ...toRefs(state),
       verify,

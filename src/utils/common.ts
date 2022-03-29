@@ -25,7 +25,6 @@ export function mapFun(accessRoutes: any): any {
 }
 
 export function initRouter(ele: any): any {
-  // ele.component = getItem(ele.componenturl)
   if (ele.componenturl === 'Layout') {
     ele.component = Layout
   } else {

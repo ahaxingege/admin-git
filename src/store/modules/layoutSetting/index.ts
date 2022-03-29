@@ -1,12 +1,6 @@
-import * as user from '@/api/login'
-// import { Module, VuexModule, Mutation, Action, getModule } from 'vuex-module-decorators'
-// import store from '@/store'
-
 interface Layout {
   isCollapse: boolean
 }
-// initial state
-// shape: [{ id, quantity }]
 
 const state: Layout = {
   isCollapse: false
@@ -18,9 +12,8 @@ const mutations: Record<string, unknown> = {
 }
 
 const actions = {
-  // 用户登录
   toogleMenu({ commit }: any, isCollapse: boolean) {
-    return new Promise((resolve: any, reject: any) => {
+    return new Promise((resolve: any) => {
       commit('SET_COLLAPSE', isCollapse);
       resolve({ message: '' });
     })

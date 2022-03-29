@@ -20,11 +20,14 @@ NProgress.configure({
   easing: 'ease',
   speed: 500,
   showSpinner: false,
-  trickleSpeed: 100,
+  trickleSpeed: 300,
   minimum: 0.3
 })
 // const app = createApp(App)
 let registerRouteFresh = true;
+let timer = setTimeout(() => {
+  sessionStorage.setItem('sessionId', guid());
+}, 300000)
 router.beforeEach(async (to, _from, next) => {
   console.log('enter')
   NProgress.start();
@@ -73,7 +76,8 @@ router.beforeEach(async (to, _from, next) => {
 })
 router.afterEach(() => {
   NProgress.done()
-  setTimeout(() => {
+  clearTimeout(timer)
+  timer = setTimeout(() => {
     sessionStorage.setItem('sessionId', guid());
   }, 300000)
 })

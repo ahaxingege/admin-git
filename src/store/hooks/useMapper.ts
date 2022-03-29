@@ -1,9 +1,5 @@
-import {
-  computed
-} from 'vue'
-import {
-  useStore
-} from 'vuex'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 // 组合mapState和mapGetters
 export default function (data: any, mapFn: any) {
   const store = useStore()

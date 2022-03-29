@@ -26,10 +26,10 @@
   </div>
 </template>
 
-<script>
-import errGif from '@/assets/401_images/401.gif'
-
-export default {
+<script lang="ts">
+import { ref, defineComponent } from 'vue';
+const errGif = '@/assets/404_images/404.png'
+export default defineComponent({
   name: 'Page401',
   data() {
     return {
@@ -48,7 +48,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

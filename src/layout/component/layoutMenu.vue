@@ -11,7 +11,6 @@
       :collapse="isCollapse"
       router
     >
-      <!-- {{ routerInfo }} -->
       <div class="toogle-collapse">
         <h3 v-if="!isCollapse" @click="toHome">不停机发布工具</h3>
         <el-button @click="toogleCollapse">
@@ -64,7 +63,7 @@ import { useStore } from 'vuex'
 import useGetters from '@/store/hooks/useGetters'
 export default defineComponent({
   name: 'App',
-  setup(props, ctx) {
+  setup(_props, ctx) {
     const store = useStore()
     const router = useRouter()
     const { isCollapse } = useGetters('', ['isCollapse'])
@@ -93,7 +92,7 @@ export default defineComponent({
     }
     const changeParentNum = () => {
       // 通过ctx调用emit事件 需要注意的是Vue2.x中使用 $emit切勿混淆
-      ctx.emit('handle', 2)
+      ctx.emit('handle', 1)
     }
 
     onMounted(() => {
